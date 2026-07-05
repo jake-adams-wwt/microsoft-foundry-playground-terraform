@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 4.80"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.6"
+    }
   }
 }
 
@@ -12,6 +16,13 @@ provider "azurerm" {
 }
 
 data "azurerm_client_config" "current" {}
+
+# Ensures custom_subdomain_name is globally unique across all Azure tenants
+resource "random_string" "subdomain_suffix" {
+  length  = 6
+  special = false
+  upper   = false
+}
 
 locals {
   product_name           = var.product_name
@@ -82,7 +93,7 @@ resource "azurerm_cognitive_account" "ai_foundry" {
   sku_name            = "S0"
 
   # Required for stateful Foundry development including the agent service
-  custom_subdomain_name      = local.formatted_product_name
+  custom_subdomain_name      = "${local.formatted_product_name}-${random_string.subdomain_suffix.result}"
   project_management_enabled = true
 
   identity {
