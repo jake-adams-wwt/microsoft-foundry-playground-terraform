@@ -4,16 +4,10 @@ variable "location" {
 }
 
 variable "product_name" {
-  type = string
+  type    = string
+  default = "Foundry Playground"
 }
 
 variable "standard_tags" {
   type = map(any)
-
-  default = {
-    Environment = "Production"
-    Dept        = "Engineering"
-    Billing     = "<Billing code>"
-    Product     = "Azure ExpressRoute"
-  }
 }

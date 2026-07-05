@@ -1,0 +1,8 @@
+location     = "northcentralus"
+standard_tags = {
+  Environment = "Test"
+    Dept        = "Engineering"
+    Product     = "Foundry Playground"
+    Owner       = "adamsjac"
+} 
+product_name = "Foundry Playground"
